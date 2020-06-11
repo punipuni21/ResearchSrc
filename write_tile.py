@@ -3,9 +3,9 @@
 """
 概要
 """
-__author__ = 'Taiki Horiuchi'
+__author__ = 'Watanabe Ryotaro'
 __version__ = '1.0'
-__date__    = "2019/07/24 13:00"
+__date__    = "2020/06/12 20:02"
 
 from glob import glob
 import os

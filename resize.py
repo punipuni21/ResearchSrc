@@ -3,9 +3,9 @@
 """
 概要
 """
-__author__ = 'Taiki Horiuchi'
+__author__ = 'Watanabe Ryotaro'
 __version__ = '1.0'
-__date__    = "2019/01/01 00:00"
+__date__    = "2020/06/12 20:02"
 
 
 from PIL import Image
@@ -43,11 +43,17 @@ def dir2resized_jpg(resize,file_read,dir_write):
         img = expand2square(img, (0, 0, 0))
         img=img.resize((h,w))
         print(img.size)
-        new_file = dir_write + file.rsplit('/', 1)[1]
+        number= int(file.rsplit('/')[-1].strip('.jpg').split('_')[-1])
+        #new_file = dir_write + file.rsplit('/', 1)[1]
+        new_file = dir_write + str(number) + '.jpg'
+        print(new_file)
+        print('file_num=',number)
+        
         if img.mode != "RGB":
             img = img.convert("RGB")
         img_np[i,:,:,:] = np.asarray(img,dtype=np.uint8)
         img.save(new_file)
+        
     np.save(file=dir_write+"out.npy",arr=np.uint8(img_np))
     
 
@@ -68,6 +74,8 @@ if __name__ == '__main__':
         sys.exit(1)
     
     dir_write = file_read[0].rsplit('/', 1)[0]
+    
+    
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
     if not os.path.exists(dir_write+"out"):

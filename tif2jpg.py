@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jun  9 16:17:32 2020
+__author__ = 'Watanabe Ryotaro'
+__version__ = '1.0'
+__date__    = "2020/06/12 20:02"
 
-@author: ShimaLab
-"""
 
 from PIL import Image
 import numpy as np

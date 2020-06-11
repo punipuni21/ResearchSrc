@@ -11,7 +11,7 @@ import os
 from tkinter import filedialog
 
 
-#tiffファイルをカラー画像のjpeg画像に変換
+#tiffファイルをカラー画像のjpeg画像に変換+ファイルの名前の変更
 
 if __name__ == '__main__':
     
@@ -30,8 +30,6 @@ if __name__ == '__main__':
         os.mkdir(dir_write+"renamed")
     dir_write+="renamed/"
     
-    cnt=1#画像につける通し番号
-        
     for i,file in enumerate(file_read):
         
         if(i%10==0):
@@ -69,16 +67,16 @@ if __name__ == '__main__':
         #画像ごとの出力ファイル名
         file_type_tif=file.rsplit('/', 1)[1]
         file_type_jpg=file_type_tif.strip('.tif')+'.jpg'
-        
+        number=int(file_type_tif.split('_')[1])   
         #出力場所は/out/fileName.jpg
 #        new_file = dir_write + file.rsplit('/', 1)[1].strip('.tif')+'.jpg'
-        new_file = dir_write + str(cnt)+'.jpg'
+        new_file = dir_write + str(number)+'.jpg'
 
         if img.mode != "RGB":
             img = img.convert("RGB")
             
         img.save(new_file)
-        cnt+=1
+        
     print("Done!!")
     
     
