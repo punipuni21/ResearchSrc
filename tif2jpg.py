@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Watanabe Ryotaro'
-__version__ = '1.0'
-__date__    = "2020/06/12 20:02"
+"""
+Created on Tue Jun  9 16:17:32 2020
 
+@author: ShimaLab
+"""
 
 from PIL import Image
 import numpy as np
@@ -23,9 +24,9 @@ if __name__ == '__main__':
     dir_write = file_read[0].rsplit('/', 1)[0]
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
-    if not os.path.exists(dir_write+"out"):
-        os.mkdir(dir_write+"out")
-    dir_write+="out/"
+    if not os.path.exists(dir_write+"jpg"):
+        os.mkdir(dir_write+"jpg")
+    dir_write+="jpg/"
 
         
     for i,file in enumerate(file_read):
@@ -71,7 +72,7 @@ if __name__ == '__main__':
             img = img.convert("RGB")
             
         img.save(new_file)
-        print("Done!!")
+    print("Done!!")
     
     
     

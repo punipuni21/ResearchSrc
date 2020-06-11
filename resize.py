@@ -43,11 +43,10 @@ def dir2resized_jpg(resize,file_read,dir_write):
         img = expand2square(img, (0, 0, 0))
         img=img.resize((h,w))
         print(img.size)
-        number= int(file.rsplit('/')[-1].strip('.jpg').split('_')[-1])
-        #new_file = dir_write + file.rsplit('/', 1)[1]
-        new_file = dir_write + str(number) + '.jpg'
-        print(new_file)
-        print('file_num=',number)
+        new_file = dir_write + file.rsplit('/', 1)[1]
+        #new_file = dir_write + str(number) + '.jpg'
+        #print(new_file)
+        #print('file_num=',number)
         
         if img.mode != "RGB":
             img = img.convert("RGB")
@@ -78,9 +77,9 @@ if __name__ == '__main__':
     
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
-    if not os.path.exists(dir_write+"out"):
-        os.mkdir(dir_write+"out")
-    dir_write+="out/"
+    if not os.path.exists(dir_write+"resized"):
+        os.mkdir(dir_write+"resized")
+    dir_write+="resized/"
 
 
     

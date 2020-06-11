@@ -9,9 +9,12 @@ from PIL import Image
 import numpy as np
 import os
 from tkinter import filedialog
+import sys
 
 
 #tiffファイルをカラー画像のjpeg画像に変換+ファイルの名前の変更
+#ファイル名は元画像の通し番号を採用
+#
 
 if __name__ == '__main__':
     
@@ -23,13 +26,17 @@ if __name__ == '__main__':
     print("Remane中")
     print("the number of images is",len(file_read))
     #出力するファイルのディレクトリ
+    hoge=file_read[0].rsplit('/')
     dir_write = file_read[0].rsplit('/', 1)[0]
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
     if not os.path.exists(dir_write+"renamed"):
         os.mkdir(dir_write+"renamed")
+    #if not os.path.exists(dir_write+"renamed/"+hoge[-2]):
+        #os.mkdir(dir_write+"renamed/"+hoge[-2])
     dir_write+="renamed/"
     
+#    sys.exit(0)
     for i,file in enumerate(file_read):
         
         if(i%10==0):
@@ -65,9 +72,18 @@ if __name__ == '__main__':
         pil_img=Image.fromarray(imglist2)
         
         #画像ごとの出力ファイル名
+        o=file.rsplit('/')
         file_type_tif=file.rsplit('/', 1)[1]
         file_type_jpg=file_type_tif.strip('.tif')+'.jpg'
-        number=int(file_type_tif.split('_')[1])   
+        
+        #ファイルの番号を抽出する(HAとかでもOriginal Imageでも使える)
+        lst=file_type_tif.split('_')
+        for i in lst:
+            if i.isdigit():
+                number = int(i)
+                break
+        
+        #number=int(file_type_tif.split('_')[1])   
         #出力場所は/out/fileName.jpg
 #        new_file = dir_write + file.rsplit('/', 1)[1].strip('.tif')+'.jpg'
         new_file = dir_write + str(number)+'.jpg'
