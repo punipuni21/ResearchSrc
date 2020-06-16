@@ -27,10 +27,13 @@ if __name__ == '__main__':
     if not os.path.exists(dir_write+"jpg"):
         os.mkdir(dir_write+"jpg")
     dir_write+="jpg/"
-
+    
+    print("jpgに変換中")
+    print("the number of images is",len(file_read))
         
     for i,file in enumerate(file_read):
-        
+        if(i%10==0):
+            print("now processing is ",i)
         img = Image.open(file)#(H,W)
         
         width, height = img.size  
@@ -71,7 +74,7 @@ if __name__ == '__main__':
         if img.mode != "RGB":
             img = img.convert("RGB")
             
-        img.save(new_file)
+        pil_img.save(new_file)
     print("Done!!")
     
     

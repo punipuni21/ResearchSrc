@@ -38,11 +38,15 @@ def dir2resized_jpg(resize,file_read,dir_write):
     """ 
     (h,w) = resize
     img_np = np.zeros((len(file_read),h,w,3),dtype=np.uint8)
+    print("Resize中")
+    print("the number of images is",len(file_read))
     for i,file in enumerate(file_read):
+        if(i%10==0):
+            print("now processing is ",i)
         img = Image.open(file)
         img = expand2square(img, (0, 0, 0))
         img=img.resize((h,w))
-        print(img.size)
+#        print(img.size)
         new_file = dir_write + file.rsplit('/', 1)[1]
         #new_file = dir_write + str(number) + '.jpg'
         #print(new_file)
@@ -63,7 +67,7 @@ if __name__ == '__main__':
         resize = (h,w)
     except ValueError:
         resize = (400, 400)
-        print(resize)
+        #print(resize)
     print("読込ファイル")
     path_pwd = os.path.abspath(os.path.dirname(__file__))
     file_read = filedialog.askopenfilename(title="読込ファイルの選択",filetypes=[("",'bmp'),("",'jpg'),("",'png')],initialdir=path_pwd,multiple=True)
@@ -77,9 +81,9 @@ if __name__ == '__main__':
     
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
-    if not os.path.exists(dir_write+"resized"):
-        os.mkdir(dir_write+"resized")
-    dir_write+="resized/"
+    if not os.path.exists(dir_write+"resized_"+str(h)):
+        os.mkdir(dir_write+"resized_"+str(h))
+    dir_write+="resized_"+str(h)+"/"
 
 
     
