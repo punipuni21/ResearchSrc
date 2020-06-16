@@ -5,7 +5,7 @@
 """
 __author__ = 'Watanabe Ryotaro'
 __version__ = '1.0'
-__date__    = "2020/06/12 20:02"
+__date__    = "2020/06/16 15:44"
 
 from glob import glob
 import os
