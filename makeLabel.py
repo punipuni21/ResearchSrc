@@ -28,9 +28,15 @@ def makeDir(path_pwd):
 
     dirLabelWhite = dirLabelWhite + 'White\\'
     
+    if not os.path.exists(dirLabelWhite+"LabelImage"):
+        os.mkdir(dirLabelWhite+"LabelImage")
+    
     if not os.path.exists(dirLabelColor+"Color"):
         os.mkdir(dirLabelColor+"Color")
     dirLabelColor = dirLabelColor + 'Color\\'
+    
+    if not os.path.exists(dirLabelColor+"LabelImage"):
+        os.mkdir(dirLabelColor+"LabelImage")
     
     return (dirLabelWhite,dirLabelColor)
 
@@ -103,30 +109,51 @@ if __name__ == '__main__':
                "Microaneurysms":np.array([0,0,255],'uint8'),"SoftExudates":np.array([255,255,0],'uint8')}#赤，緑，青，黄
     
     
-    
-    #マスクを求める部分の実装はまだできていない
-    for idx in range(theNumberOfEachLesion):
+    for lesionName in lesionList:
         
-        for lesionName in lesionList:
+        npyFile=parentDir+'\\npyFiles\\'+lesionName+'.npy'
+        hoge=np.load(npyFile)
+        
+        for i in range(theNumberOfEachLesion):
             
-            npyFile=parentDir+'\\npyFiles\\'+lesionName+'.npy'
-            hoge=np.load(npyFile)
-            #黒の部分は何もしない
-            #赤の部分は白にしてマスクを作る（白黒）
-            #現画像の赤い部分はcolorDictの色で置換してマスクを作成（色マスク）
-            break
-        break
-    
-    
+            now=hoge[i]
+#            print(colorDict[lesionName][0])
+            #白黒画像は全て白でマスク
+            
+            whiteMask[i,:,:,0]=np.where(now[:,:,0]>0,255,whiteMask[i,:,:,0])
+            whiteMask[i,:,:,1]=np.where(now[:,:,0]>0,255,whiteMask[i,:,:,1])
+            whiteMask[i,:,:,2]=np.where(now[:,:,0]>0,255,whiteMask[i,:,:,2])
+            
+            colorMask[i,:,:,0]=np.where(now[:,:,0]>0,colorDict[lesionName][0],colorMask[i,:,:,0])
+            colorMask[i,:,:,1]=np.where(now[:,:,0]>0,colorDict[lesionName][1],colorMask[i,:,:,1])
+            colorMask[i,:,:,2]=np.where(now[:,:,0]>0,colorDict[lesionName][2],colorMask[i,:,:,2])
+
+         
+
     ##保存
     np.save(dirLabelWhite+"whiteMask",whiteMask)
     np.save(dirLabelColor+"colorMask",colorMask)
     
-    
-    
-    
-    
-    
+    #ラベル付けはできている
+    #画像の保存
+    for idx in range(theNumberOfEachLesion):
+        
+        whiteLabelImage=Image.fromarray(whiteMask[idx].astype(np.uint8))
+        
+        colorLabelImage=Image.fromarray(colorMask[idx].astype(np.uint8))
+        
+        whiteLabelImage.save(dirLabelWhite+"LabelImage\\"+str(idx+1)+'.jpg')
+        colorLabelImage.save(dirLabelColor+"LabelImage\\"+str(idx+1)+'.jpg')    
+        
+        
+#        
+#    print('Done !')
+#    
+#    
+#    
+#    
+#    
+#    
     
     
     
