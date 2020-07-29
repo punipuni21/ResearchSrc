@@ -37,16 +37,18 @@ def dir2resized_jpg(resize,file_read,dir_write):
     画像の大きさを(480,480)に変え，画像を保存
     """ 
     (h,w) = resize
+    print(h," ",w)
     img_np = np.zeros((len(file_read),h,w,3),dtype=np.uint8)
+    print(img_np.shape)
     print("Resize中")
     print("the number of images is",len(file_read))
     for i,file in enumerate(file_read):
         if(i%10==0):
             print("now processing is ",i)
         img = Image.open(file)
-        img = expand2square(img, (0, 0, 0))
-        img=img.resize((h,w))
-#        print(img.size)
+        #img = expand2square(img, (0, 0, 0))正方形にする場合
+        img=img.resize((w,h))
+#        print(img.size)25
         new_file = dir_write + file.rsplit('/', 1)[1]
         #new_file = dir_write + str(number) + '.jpg'
         #print(new_file)
@@ -54,6 +56,9 @@ def dir2resized_jpg(resize,file_read,dir_write):
         
         if img.mode != "RGB":
             img = img.convert("RGB")
+#        print(img.size)
+#        hoge = np.array(img,'uint8')
+#        print(hoge.shape)
         img_np[i,:,:,:] = np.asarray(img,dtype=np.uint8)
         img.save(new_file)
         
@@ -61,7 +66,7 @@ def dir2resized_jpg(resize,file_read,dir_write):
     
 
 if __name__ == '__main__':
-    print("リサイズ後の大きさ 何も入力しない場合400x400になります\n入力例>>>400 400")
+    print("リサイズ後の大きさ 何も入力しない場合400x400になります\n入力例>>>（高さ　幅）： 400 400")
     try:
         h,w = (int(i) for i in input().split())
         resize = (h,w)
@@ -81,9 +86,9 @@ if __name__ == '__main__':
     
     if dir_write[-1] != "/":
         dir_write = dir_write + "/"
-    if not os.path.exists(dir_write+"resized_"+str(h)):
-        os.mkdir(dir_write+"resized_"+str(h))
-    dir_write+="resized_"+str(h)+"/"
+    if not os.path.exists(dir_write+"resized_"+str(h)+'_'+str(w)):
+        os.mkdir(dir_write+"resized_"+str(h)+'_'+str(w))
+    dir_write+="resized_"+str(h)+'_'+str(w)+"/"
 
 
     

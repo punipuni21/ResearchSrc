@@ -66,7 +66,7 @@ def main(imgs_np,file_write):
     #リサイズ
     (n,h,w,c) = imgs_np.shape
     ratio = tile_width/column_size/w
-    resize = (int(h*ratio),int(w*ratio))
+    resize = (h,w)
     imgs = np.zeros((n,resize[0],resize[1],c),dtype=np.uint8)
 
     for i,img in enumerate(imgs_np):
