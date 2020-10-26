@@ -143,7 +143,7 @@ if __name__ == '__main__':
     
     print("読込ファイル")
     path_pwd = os.path.abspath(os.path.dirname(__file__))
-    file_read = filedialog.askopenfilename(title="読込ファイルの選択",filetypes=[("",'npy')],initialdir=path_pwd,multiple=True)
+    file_read = filedialog.askopenfilename(title="読込ファイルの選択",filetypes=[("",'bmp'),("",'jpg'),("",'png')],initialdir=path_pwd,multiple=True)
     
     times = 2
     condition = dict(
@@ -155,7 +155,7 @@ if __name__ == '__main__':
             horizontal_flip=False,
             vertical_flip=False)
     
-    seed = 81
+    seed = 89
 #    print("seed:",seed)
 #    print("condition:",condition)
     makeAugmentedImage(file_read,times,condition,seed)
